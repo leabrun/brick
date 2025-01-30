@@ -8,9 +8,9 @@
 > Сценарий проекта.
 3. run.sh
 > Bash скрипт для упрощенного запуска сценария.
-Запустить сценарий.
+<p>Запустить сценарий.</p>
 ```
-chmod +x /playbook/run.sh
+chmod +x playbook/run.sh
 ```
 ```
 ./playbook/run.sh
