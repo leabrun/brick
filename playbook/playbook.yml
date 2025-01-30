@@ -1,0 +1,45 @@
+---
+- name: Configure Debchik12
+  hosts: debchik
+  become: 1
+  tasks:
+    - name: Create user
+      user:
+        name: brickdev
+        password: "{{ 'pass' | password_hash('sha512') }}"
+        state: present
+
+    - name: Allow PubkeyAuthentication
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PubkeyAuthentication'
+        line: 'PubkeyAuthentication yes'
+        state: present
+      notify: RestartSSH
+
+    - name: No root login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+        state: present
+      notify: RestartSSH
+
+    - name: Copy SSH public key for brickdev
+      authorized_key:
+        user: brickdev
+        key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDW1sg+\
+        ys6EEZd6ZzbDlrMMybOBUALEtERY2/ZKsvgbcAzTERxbtsqu+iN\
+        NDBo+sf3L3YuWkd8fLH4SJ3MQV42ySc6ml2tMT0G2r+QIWwFz+n\
+        PaD2DY8blgFpsa41TZxwKgLmqEtUVlps9Q6Un5KtJMjTl2MWYKs\
+        wdxSqHw8em0DNigJolWfzsmoTvd1HXTYdj/PiJECW3nS38PFlL1\
+        9Av6ipwrbxme2/VyvjolX5F3p/dgLkuUU7UMQ+tlx9gAlN0F/Tf\
+        6zMHSubIBC7lOf58zP+IlykdD4leVaNpFckk9hxnKCZpyM7jlwi\
+        2YSnYLAOh4v56NTq7c/yG2jX9+lSb"
+        state: present
+
+  handlers:
+    - name: RestartSSH
+      service:
+        name: sshd
+        state: restarted

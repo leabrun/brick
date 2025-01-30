@@ -1,0 +1,1 @@
+sshpass ansible-playbook -i playbook/inventory.ini playbook/playbook.yml
