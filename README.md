@@ -24,9 +24,9 @@ chmod +x playbook/run.sh
 > Файл зависимостей проекта.
 3. Dockerfile
 > Файл сборки образа API
-2. docker-compose.yml
+4. docker-compose.yml
 > Файл сборки контейнеров по образу API.
-3. count_replicas.sh
+5. count_replicas.sh
 > Bash скрипт для запуска репликаций. Docker-Compose в отличие от Docker Swarm не предоставляет встроенного счетчика репликаций, поэтому релизован нумерованный запуск через скрипт.
 ### Запустить репликацию.
 ```
